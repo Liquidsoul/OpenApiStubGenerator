@@ -1,30 +1,3 @@
-# openapi-stub-generator
-
-A tool to generate stubs from a an OpenAPI specification.
-
-## Example
-
-Configuration file `Examples/config.json`
-
-```json
-{
-  "defaults": {
-    "array": {
-      "type": "randomLength",
-      "minimum": 1,
-      "maximum": 1
-    },
-    "string": {
-      "type": "randomFromList",
-      "list": ["RER", "BUS", "METRO"]
-    }
-  }
-}
-```
-
-OpenAPI specification `Examples/spec.yml`
-
-```
 openapi: 3.0.1
 info:
   title: API
@@ -68,6 +41,11 @@ components:
         theoreticalNextStops:
           $ref: '#/components/schemas/TheoreticalNextStops'
 
+    RealTimeNextStops:
+      type: array
+      items:
+        $ref: '#/components/schemas/RealTimeNextStop'
+
     RealTimeNextStop:
       type: object
       required:
@@ -96,6 +74,11 @@ components:
           - LEAVING
           - UNKNOWN
 
+    TheoreticalNextStops:
+      type: array
+      items:
+        $ref: '#/components/schemas/TheoreticalNextStop'
+
     TheoreticalNextStop:
       type: object
       required:
@@ -120,39 +103,3 @@ components:
         isFirst:
           description: True if this stop is the first stop before end of service for this direction.
           type: boolean
-```
-
-Call
-
-    open-api-stub-generator --spec-file Examples/spec.yml --definition Result --config-file Examples/config.json
-
-Result
-
-```json
-{
-  "theoreticalNextStops" : [
-    {
-      "dateTime" : "METRO",
-      "directionName" : "BUS",
-      "isFirst" : true,
-      "destinationName" : "RER",
-      "isLast" : false,
-      "directionId" : "BUS",
-      "servicePatternName" : "METRO"
-    }
-  ],
-  "currentTime" : "METRO",
-  "nextStops" : [
-    {
-      "status" : "METRO",
-      "destinationName" : "BUS",
-      "waitingTimeInMinutes" : 12,
-      "directionId" : "BUS",
-      "servicePatternName" : "BUS",
-      "directionName" : "BUS"
-    }
-  ],
-  "identifier" : "METRO",
-  "name" : "RER"
-}
-```

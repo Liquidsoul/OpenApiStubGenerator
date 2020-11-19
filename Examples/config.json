@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "array": {
+      "type": "randomLength",
+      "minimum": 1,
+      "maximum": 1
+    },
+    "string": {
+      "type": "randomFromList",
+      "list": ["RER", "BUS", "METRO"]
+    }
+  }
+}
