@@ -7,7 +7,7 @@ struct GeneratorGroup {
 }
 
 extension GeneratorGroup {
-    init(configuration: GeneratorConfigurations = .default) {
+    init(configuration: GeneratorGroup.Configuration = .default) {
         let dateGenerator = DateGenerator(mode: configuration.date)
         self.init(booleanGenerator: .init(mode: configuration.boolean),
                   integerGenerator: .init(mode: configuration.integer),

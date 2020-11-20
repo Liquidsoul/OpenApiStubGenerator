@@ -1,11 +1,11 @@
 import Foundation
 
 public struct Configuration {
-    let defaults: GeneratorConfigurations
+    let defaults: GeneratorGroup.Configuration
 
     typealias Path = String
 
-    let paths: [Path: GeneratorConfigurations]
+    let paths: [Path: GeneratorGroup.Configuration]
 
     public static let `default`: Configuration = .init(defaults: .default, paths: [:])
 }
@@ -23,7 +23,7 @@ public extension Configuration {
                       paths: type(of: self).loadPaths(jsonObject: jsonObject))
     }
 
-    private static func loadDefaults(jsonObject: [String: Any]) throws -> GeneratorConfigurations {
+    private static func loadDefaults(jsonObject: [String: Any]) throws -> GeneratorGroup.Configuration {
         let defaultsKey = "defaults"
         guard let defaultsValue = jsonObject[defaultsKey] else {
             return .default
@@ -31,10 +31,10 @@ public extension Configuration {
         guard let defaults = defaultsValue as? [String: Any] else {
             throw ConfigurationLoadingError.invalidType(key: defaultsKey)
         }
-        return try GeneratorConfigurations(jsonObject: defaults)
+        return try GeneratorGroup.Configuration(jsonObject: defaults)
     }
 
-    private static func loadPaths(jsonObject: [String: Any]) throws -> [Path: GeneratorConfigurations] {
+    private static func loadPaths(jsonObject: [String: Any]) throws -> [Path: GeneratorGroup.Configuration] {
         let pathsKey = "paths"
         guard let pathsValue = jsonObject[pathsKey] else {
             return [:]
@@ -42,9 +42,9 @@ public extension Configuration {
         guard let paths = pathsValue as? [String: [String: Any]] else {
             throw ConfigurationLoadingError.invalidType(key: pathsKey)
         }
-        return try paths.reduce(into: [Path: GeneratorConfigurations]()) { (pathsConfigurations, keyValue) in
+        return try paths.reduce(into: [Path: GeneratorGroup.Configuration]()) { (pathsConfigurations, keyValue) in
             let (path, configurationData) = keyValue
-            pathsConfigurations[path] = try GeneratorConfigurations(jsonObject: configurationData)
+            pathsConfigurations[path] = try GeneratorGroup.Configuration(jsonObject: configurationData)
         }
     }
 }
