@@ -53,3 +53,30 @@ struct IntegerGenerator {
         static let `default`: Config = .faker
     }
 }
+
+extension IntegerGenerator.Config {
+    init?(jsonObject: [String: Any]) throws {
+        let integerKey = "integer"
+        guard let integerValue = jsonObject[integerKey] else { return nil }
+        guard let integerJson = integerValue as? [String: Any] else { throw ConfigurationLoadingError.invalidType(key: integerKey) }
+
+        let typeKey = "type"
+        guard let typeValue = integerJson[typeKey] as? String else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [integerKey, typeKey].joined(separator: ".")) }
+
+        switch typeValue {
+        case "faker":
+            self = .faker
+        case "random":
+            let minimumKey = "minimum"
+            guard let minimumValue = integerJson[minimumKey] as? Int else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [integerKey, minimumKey].joined(separator: ".")) }
+            let maximumKey = "maximum"
+            guard let maximumValue = integerJson[maximumKey] as? Int else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [integerKey, maximumKey].joined(separator: ".")) }
+
+            guard minimumValue <= maximumValue else { throw ConfigurationLoadingError.invalidConfiguration(config: integerJson) }
+
+            self = .random(minimum: minimumValue, maximum: maximumValue)
+        default:
+            throw ConfigurationLoadingError.invalidConfiguration(config: integerJson)
+        }
+    }
+}

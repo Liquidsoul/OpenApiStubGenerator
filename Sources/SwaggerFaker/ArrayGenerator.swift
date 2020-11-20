@@ -37,3 +37,24 @@ class ArrayGenerator {
         }
     }
 }
+
+extension ArrayGenerator.Config {
+    init?(jsonObject: [String: Any]) throws {
+        let arrayKey = "array"
+        guard let arrayValue = jsonObject[arrayKey] else { return nil }
+        guard let arrayJson = arrayValue as? [String: Any] else { throw ConfigurationLoadingError.invalidType(key: arrayKey) }
+
+        let typeKey = "type"
+        guard let typeValue = arrayJson[typeKey] as? String else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [arrayKey, typeKey].joined(separator: ".")) }
+        guard typeValue == "randomLength" else { throw ConfigurationLoadingError.invalidConfiguration(config: arrayJson) }
+
+        let minimumKey = "minimum"
+        guard let minimumValue = arrayJson[minimumKey] as? Int else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [arrayKey, minimumKey].joined(separator: ".")) }
+        let maximumKey = "maximum"
+        guard let maximumValue = arrayJson[maximumKey] as? Int else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [arrayKey, maximumKey].joined(separator: ".")) }
+
+        guard minimumValue <= maximumValue else { throw ConfigurationLoadingError.invalidConfiguration(config: arrayJson) }
+
+        self = .randomLength(range: minimumValue..<(maximumValue + 1))
+    }
+}

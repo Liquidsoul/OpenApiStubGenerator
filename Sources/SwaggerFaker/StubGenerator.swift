@@ -1,21 +1,30 @@
 import Foundation
 import Swagger
 
+struct GeneratorGroup {
+    let booleanGenerator: BooleanGenerator
+    let integerGenerator: IntegerGenerator
+    let numberGenerator: NumberGenerator
+    let stringGenerator: StringGenerator
+    let arrayGenerator: ArrayGenerator
+}
+
+extension GeneratorGroup {
+    init(configuration: GeneratorConfigurations = .default) {
+        let dateGenerator = DateGenerator(config: configuration.date)
+        self.init(booleanGenerator: .init(config: configuration.boolean),
+                  integerGenerator: .init(config: configuration.integer),
+                  numberGenerator: .init(config: configuration.number),
+                  stringGenerator: .init(config: configuration.string, dateGenerator: dateGenerator),
+                  arrayGenerator: .init(config: configuration.array))
+    }
+}
+
 public struct StubGenerator {
-    private let booleanGenerator: BooleanGenerator
-    private let integerGenerator: IntegerGenerator
-    private let numberGenerator: NumberGenerator
-    private let dateGenerator: DateGenerator
-    private let stringGenerator: StringGenerator
-    private let arrayGenerator: ArrayGenerator
+    private let generators: GeneratorGroup
 
     public init(configuration: Configuration = .default) {
-        self.booleanGenerator = BooleanGenerator(config: configuration.boolean)
-        self.integerGenerator = IntegerGenerator(config: configuration.integer)
-        self.numberGenerator = NumberGenerator(config: configuration.number)
-        self.dateGenerator = DateGenerator(config: configuration.date)
-        self.stringGenerator = StringGenerator(config: configuration.string, dateGenerator: dateGenerator)
-        self.arrayGenerator = ArrayGenerator(config: configuration.array)
+        self.generators = GeneratorGroup(configuration: configuration.defaults)
     }
 
     enum Item {
@@ -34,9 +43,9 @@ public struct StubGenerator {
         case .string(let stringSchema):
             return generate(stringSchema)
         case .number(let numberSchema):
-            return numberGenerator.generate(from: numberSchema)
+            return generators.numberGenerator.generate(from: numberSchema)
         case .boolean:
-            return booleanGenerator.generate()
+            return generators.booleanGenerator.generate()
         case .array(let arraySchema):
             return generate(arraySchema, path: path)
         case .object(let objectSchema):
@@ -51,15 +60,15 @@ public struct StubGenerator {
     }
 
     func generate(_ integerSchema: IntegerSchema) -> Int {
-        return integerGenerator.generate(from: integerSchema)
+        return generators.integerGenerator.generate(from: integerSchema)
     }
 
     func generate(_ stringSchema: StringSchema) -> String {
-        return stringGenerator.generate(from: stringSchema)
+        return generators.stringGenerator.generate(from: stringSchema)
     }
 
     func generate(_ arraySchema: ArraySchema, path: [Item]) -> [Any] {
-        return arrayGenerator.generate(arraySchema: arraySchema) { (schemaType, index) -> Any in
+        return generators.arrayGenerator.generate(arraySchema: arraySchema) { (schemaType, index) -> Any in
             return generate(schemaType, path: path + [.index(index)])
         }
     }

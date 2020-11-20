@@ -7,12 +7,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     // MARK: - Array
@@ -30,12 +30,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .randomLength(range: 4..<7))
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .randomLength(range: 4..<7))
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_arrayConfiguration_uniqueLength() throws {
@@ -51,12 +51,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .randomLength(range: 4..<5))
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .randomLength(range: 4..<5))
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_arrayConfiguration_invalid() {
@@ -85,12 +85,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .now)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .now)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_dateConfiguration_static() throws {
@@ -105,12 +105,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .static(Date(timeIntervalSince1970: 1_605_185_678)))
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .static(Date(timeIntervalSince1970: 1_605_185_678)))
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_dateConfiguration_random() throws {
@@ -126,12 +126,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .random(after: Date(timeIntervalSince1970: 1605391132), before: Date(timeIntervalSince1970: 1605736732)))
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .random(after: Date(timeIntervalSince1970: 1605391132), before: Date(timeIntervalSince1970: 1605736732)))
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_dateConfiguration_random_invalid() throws {
@@ -161,12 +161,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .increments(from: Date(timeIntervalSince1970: 1605736732), by: 25))
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .increments(from: Date(timeIntervalSince1970: 1605736732), by: 25))
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_dateConfiguration_increments_from_now() throws {
@@ -184,12 +184,12 @@ class ConfigurationTests: XCTestCase {
         let configuration = try Configuration(jsonObject: configurationData)
         let nextDate = Date()
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.string, .default)
-        guard case let .increments(from, increment) = configuration.date else {
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
+        guard case let .increments(from, increment) = configuration.defaults.date else {
             return XCTFail()
         }
         XCTAssertEqual(increment, 25)
@@ -211,12 +211,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .static("staticValue"))
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .static("staticValue"))
     }
 
     func test_loadJSONObject_defaults_stringConfiguration_faker() throws {
@@ -230,12 +230,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .faker)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .faker)
     }
 
     func test_loadJSONObject_defaults_stringConfiguration_randomFromList() throws {
@@ -250,12 +250,12 @@ class ConfigurationTests: XCTestCase {
 
         let configuration = try Configuration(jsonObject: configurationData)
 
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .randomFromList(["List", "of", "strings"]))
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .randomFromList(["List", "of", "strings"]))
     }
 
     // MARK: - Integer
@@ -270,12 +270,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .faker)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .faker)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_integerConfiguration_random() throws {
@@ -290,12 +290,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .random(minimum: 5, maximum: 10))
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .random(minimum: 5, maximum: 10))
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     // MARK: - Number
@@ -310,12 +310,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .faker)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .faker)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_numberConfiguration_random() throws {
@@ -330,12 +330,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .random(minimum: 5.2, maximum: 10.4))
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .random(minimum: 5.2, maximum: 10.4))
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_numberConfiguration_random_withJSONIntegerValues() throws {
@@ -350,12 +350,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .default)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .random(minimum: 5, maximum: 10))
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .default)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .random(minimum: 5, maximum: 10))
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     // MARK: - Boolean
@@ -370,12 +370,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .faker)
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .faker)
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_booleanConfiguration_static_true() throws {
@@ -389,12 +389,12 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .static(true))
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .static(true))
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 
     func test_loadJSONObject_defaults_booleanConfiguration_static_false() throws {
@@ -408,11 +408,11 @@ class ConfigurationTests: XCTestCase {
         ]
 
         let configuration = try Configuration(jsonObject: configurationData)
-        XCTAssertEqual(configuration.boolean, .static(false))
-        XCTAssertEqual(configuration.integer, .default)
-        XCTAssertEqual(configuration.number, .default)
-        XCTAssertEqual(configuration.array, .default)
-        XCTAssertEqual(configuration.date, .default)
-        XCTAssertEqual(configuration.string, .default)
+        XCTAssertEqual(configuration.defaults.boolean, .static(false))
+        XCTAssertEqual(configuration.defaults.integer, .default)
+        XCTAssertEqual(configuration.defaults.number, .default)
+        XCTAssertEqual(configuration.defaults.array, .default)
+        XCTAssertEqual(configuration.defaults.date, .default)
+        XCTAssertEqual(configuration.defaults.string, .default)
     }
 }

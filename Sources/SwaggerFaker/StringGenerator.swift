@@ -84,3 +84,29 @@ extension StringDateGenerator {
         return dateFormatter.string(from: generateDate())
     }
 }
+
+extension StringGenerator.Config {
+    init?(jsonObject: [String: Any]) throws {
+        let stringKey = "string"
+        guard let stringValue = jsonObject[stringKey] else { return nil }
+        guard let stringJson = stringValue as? [String: Any] else { throw ConfigurationLoadingError.invalidType(key: stringKey) }
+
+        let typeKey = "type"
+        guard let typeValue = stringJson[typeKey] as? String else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [stringKey, typeKey].joined(separator: ".")) }
+
+        switch typeValue {
+        case "faker":
+            self = .faker
+        case "static":
+            let valueKey = "value"
+            guard let value = stringJson[valueKey] as? String else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [stringKey, valueKey].joined(separator: "."))}
+            self = .static(value)
+        case "randomFromList":
+            let listKey = "list"
+            guard let listValue = stringJson[listKey] as? [String] else { throw ConfigurationLoadingError.missingKeyOrInvalidType(key: [stringKey, listKey].joined(separator: "."))}
+            self = .randomFromList(listValue)
+        default:
+            throw ConfigurationLoadingError.invalidConfiguration(config: stringJson)
+        }
+    }
+}
