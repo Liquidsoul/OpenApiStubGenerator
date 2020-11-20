@@ -410,4 +410,31 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(configuration.defaults.date, .default)
         XCTAssertEqual(configuration.defaults.string, .default)
     }
+
+    // MARK: - Paths
+
+    func test_loadJSONObject_paths() throws {
+        let configurationData: [String: Any] = [
+            "paths": [
+                "name": [
+                    "boolean": [
+                        "type": "static",
+                        "value": false
+                    ]
+                ]
+            ]
+        ]
+
+        let configuration = try Configuration(jsonObject: configurationData)
+
+        guard let pathConfiguration = configuration.paths["name"] else {
+            return XCTFail("No configuration found for path 'name'")
+        }
+        XCTAssertEqual(pathConfiguration.boolean, .static(false))
+        XCTAssertEqual(pathConfiguration.integer, .default)
+        XCTAssertEqual(pathConfiguration.number, .default)
+        XCTAssertEqual(pathConfiguration.array, .default)
+        XCTAssertEqual(pathConfiguration.date, .default)
+        XCTAssertEqual(pathConfiguration.string, .default)
+    }
 }
