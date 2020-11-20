@@ -7,7 +7,7 @@ class ArrayGeneratorTests: XCTestCase {
     func test_generateEmptyArrayIfRangeContainsNoElement() {
         let spy = GeneratorSpy()
 
-        let sut = ArrayGenerator(config: .randomLength(range: 0..<0))
+        let sut = ArrayGenerator(mode: .randomLength(range: 0..<0))
 
         let schema = ArraySchema(items: .single(Schema(metadata: .init(), type: .integer(IntegerSchema()))))
         let result = sut.generate(arraySchema: schema, generator: spy.generate(_:index:))
@@ -19,7 +19,7 @@ class ArrayGeneratorTests: XCTestCase {
         let length = 4
         let spy = GeneratorSpy()
 
-        let sut = ArrayGenerator(config: .randomLength(range: length..<(length + 1)))
+        let sut = ArrayGenerator(mode: .randomLength(range: length..<(length + 1)))
 
         let schema = ArraySchema(items: .single(Schema(metadata: .init(), type: .integer(IntegerSchema()))))
         let result = sut.generate(arraySchema: schema, generator: spy.generate(_:index:))

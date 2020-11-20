@@ -2,17 +2,17 @@ import Fakery
 import Foundation
 
 class DateGenerator: StringDateGenerator {
-    let config: Config
-    let faker = Faker()
+    private let mode: Mode
+    private let faker = Faker()
 
     private var incrementCounter = 0
 
-    init(config: Config) {
-        self.config = config
+    init(mode: Mode) {
+        self.mode = mode
     }
 
     func generateDate() -> Date {
-        switch config {
+        switch mode {
         case .now:
             return Date()
         case .static(let date):
@@ -26,13 +26,13 @@ class DateGenerator: StringDateGenerator {
         }
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case `static`(Date)
         case now
         case increments(from: Date, by: TimeInterval)
         case random(after: Date, before: Date)
 
-        static let `default`: Config = .random(after: Date().addingTimeInterval(-48 * 3600), before: Date().addingTimeInterval(48 * 3600))
+        static let `default`: Mode = .random(after: Date().addingTimeInterval(-48 * 3600), before: Date().addingTimeInterval(48 * 3600))
     }
 
     lazy var dateFormatter: ISO8601DateFormatter = ISO8601DateFormatter().withFormatOptions([.withInternetDateTime, .withFractionalSeconds])
@@ -45,7 +45,7 @@ extension ISO8601DateFormatter {
     }
 }
 
-extension DateGenerator.Config {
+extension DateGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let dateKey = "date"
         guard let dateValue = jsonObject[dateKey] else { return nil }

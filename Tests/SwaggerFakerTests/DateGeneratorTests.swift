@@ -6,7 +6,7 @@ class DateGeneratorTests: XCTestCase {
     func test_generate_static() {
         let staticDate = Date()
 
-        let sut = DateGenerator(config: .static(staticDate))
+        let sut = DateGenerator(mode: .static(staticDate))
 
         XCTAssertEqual(staticDate, sut.generateDate())
         XCTAssertEqual(staticDate, sut.generateDate())
@@ -16,7 +16,7 @@ class DateGeneratorTests: XCTestCase {
         let fromDate = Date().addingTimeInterval(-3600)
         let toDate = Date().addingTimeInterval(3600)
 
-        let sut = DateGenerator(config: .random(after: fromDate, before: toDate))
+        let sut = DateGenerator(mode: .random(after: fromDate, before: toDate))
 
         let result1 = sut.generateDate()
         let result2 = sut.generateDate()
@@ -31,7 +31,7 @@ class DateGeneratorTests: XCTestCase {
         let referenceDate = Date().addingTimeInterval(-3600)
         let increment: TimeInterval = 60
 
-        let sut = DateGenerator(config: .increments(from: referenceDate, by: increment))
+        let sut = DateGenerator(mode: .increments(from: referenceDate, by: increment))
 
         let result1 = sut.generateDate()
         XCTAssertEqual(result1, referenceDate)

@@ -4,10 +4,10 @@ import Swagger
 
 struct BooleanGenerator {
     private let faker = Faker()
-    let config: Config
+    let mode: Mode
 
     func generate() -> Bool {
-        switch config {
+        switch mode {
         case .faker:
             return faker.number.randomBool()
         case .static(let value):
@@ -15,15 +15,15 @@ struct BooleanGenerator {
         }
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case faker
         case `static`(Bool)
 
-        static let `default`: Config = .faker
+        static let `default`: Mode = .faker
     }
 }
 
-extension BooleanGenerator.Config {
+extension BooleanGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let booleanKey = "boolean"
         guard let booleanValue = jsonObject[booleanKey] else { return nil }

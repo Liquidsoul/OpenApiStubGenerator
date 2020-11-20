@@ -8,11 +8,11 @@ struct GeneratorGroup {
 
 extension GeneratorGroup {
     init(configuration: GeneratorConfigurations = .default) {
-        let dateGenerator = DateGenerator(config: configuration.date)
-        self.init(booleanGenerator: .init(config: configuration.boolean),
-                  integerGenerator: .init(config: configuration.integer),
-                  numberGenerator: .init(config: configuration.number),
-                  stringGenerator: .init(config: configuration.string, dateGenerator: dateGenerator),
-                  arrayGenerator: .init(config: configuration.array))
+        let dateGenerator = DateGenerator(mode: configuration.date)
+        self.init(booleanGenerator: .init(mode: configuration.boolean),
+                  integerGenerator: .init(mode: configuration.integer),
+                  numberGenerator: .init(mode: configuration.number),
+                  stringGenerator: .init(mode: configuration.string, dateGenerator: dateGenerator),
+                  arrayGenerator: .init(mode: configuration.array))
     }
 }

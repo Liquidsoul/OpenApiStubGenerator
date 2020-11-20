@@ -9,11 +9,11 @@ struct StringGenerator {
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return formatter
     }()
-    let config: Config
+    let mode: Mode
     let dateGenerator: StringDateGenerator
 
     func generate(from schema: StringSchema) -> String {
-        switch config {
+        switch mode {
         case .faker:
             return fakerGenerate(schema: schema)
         case .static(let staticString):
@@ -63,12 +63,12 @@ struct StringGenerator {
         }
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case faker
         case `static`(String)
         case randomFromList([String])
 
-        static let `default`: Config = .faker
+        static let `default`: Mode = .faker
     }
 }
 
@@ -85,7 +85,7 @@ extension StringDateGenerator {
     }
 }
 
-extension StringGenerator.Config {
+extension StringGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let stringKey = "string"
         guard let stringValue = jsonObject[stringKey] else { return nil }

@@ -4,7 +4,7 @@ import Swagger
 
 struct IntegerGenerator {
     private let faker = Faker()
-    let config: Config
+    let mode: Mode
 
     func generate(from schema: IntegerSchema) -> Int {
         if let minimum = self.minimum(from: schema), let maximum = self.maximum(from: schema), minimum == maximum {
@@ -21,40 +21,40 @@ struct IntegerGenerator {
     }
 
     private func minimum(from schema: IntegerSchema) -> Int? {
-        guard case let .random(configMinimum, _) = config else {
+        guard case let .random(modeMinimum, _) = mode else {
             return schema.minimum
         }
         guard let schemaMinimum = schema.minimum else {
-            return configMinimum
+            return modeMinimum
         }
-        if configMinimum < schemaMinimum {
+        if modeMinimum < schemaMinimum {
             return schemaMinimum
         }
-        return configMinimum
+        return modeMinimum
     }
 
     private func maximum(from schema: IntegerSchema) -> Int? {
-        guard case let .random(_, configMaximum) = config else {
+        guard case let .random(_, modeMaximum) = mode else {
             return schema.maximum
         }
         guard let schemaMaximum = schema.maximum else {
-            return configMaximum
+            return modeMaximum
         }
-        if schemaMaximum < configMaximum {
+        if schemaMaximum < modeMaximum {
             return schemaMaximum
         }
-        return configMaximum
+        return modeMaximum
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case faker
         case random(minimum: Int, maximum: Int)
 
-        static let `default`: Config = .faker
+        static let `default`: Mode = .faker
     }
 }
 
-extension IntegerGenerator.Config {
+extension IntegerGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let integerKey = "integer"
         guard let integerValue = jsonObject[integerKey] else { return nil }

@@ -1,33 +1,33 @@
 import Swagger
 
 class ArrayGenerator {
-    let config: Config
+    let mode: Mode
 
-    init(config: Config) {
-        self.config = config
+    init(mode: Mode) {
+        self.mode = mode
     }
 
     func generate(arraySchema: ArraySchema, generator: (SchemaType, _ index: Int) -> Any) -> [Any] {
         switch arraySchema.items {
         case .single(let schema):
-            return (0..<config.length).map { index -> Any in
+            return (0..<mode.length).map { index -> Any in
                 generator(schema.type, index)
             }
         case .multiple(let schemas):
             guard let first = schemas.first else {
                 return []
             }
-            return (0..<config.length).map { index -> Any in
+            return (0..<mode.length).map { index -> Any in
                 let schema = schemas.randomElement() ?? first
                 return generator(schema.type, index)
             }
         }
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case randomLength(range: Range<Int>)
 
-        static let `default`: Config = .randomLength(range: 1..<5)
+        static let `default`: Mode = .randomLength(range: 1..<5)
 
         var length: Int {
             switch self {
@@ -38,7 +38,7 @@ class ArrayGenerator {
     }
 }
 
-extension ArrayGenerator.Config {
+extension ArrayGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let arrayKey = "array"
         guard let arrayValue = jsonObject[arrayKey] else { return nil }

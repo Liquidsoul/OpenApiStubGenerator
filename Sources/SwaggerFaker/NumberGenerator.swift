@@ -3,7 +3,7 @@ import Swagger
 
 struct NumberGenerator {
     private let faker = Faker()
-    let config: Config
+    let mode: Mode
 
     func generate(from schema: NumberSchema) -> Double {
         if let minimum = self.minimum(from: schema), let maximum = self.maximum(from: schema), minimum == maximum {
@@ -20,40 +20,40 @@ struct NumberGenerator {
     }
 
     private func minimum(from schema: NumberSchema) -> Double? {
-        guard case let .random(configMinimum, _) = config else {
+        guard case let .random(modeMinimum, _) = mode else {
             return schema.minimum
         }
         guard let schemaMinimum = schema.minimum else {
-            return configMinimum
+            return modeMinimum
         }
-        if configMinimum < schemaMinimum {
+        if modeMinimum < schemaMinimum {
             return schemaMinimum
         }
-        return configMinimum
+        return modeMinimum
     }
 
     private func maximum(from schema: NumberSchema) -> Double? {
-        guard case let .random(_, configMaximum) = config else {
+        guard case let .random(_, modeMaximum) = mode else {
             return schema.maximum
         }
         guard let schemaMaximum = schema.maximum else {
-            return configMaximum
+            return modeMaximum
         }
-        if schemaMaximum < configMaximum {
+        if schemaMaximum < modeMaximum {
             return schemaMaximum
         }
-        return configMaximum
+        return modeMaximum
     }
 
-    enum Config: Equatable {
+    enum Mode: Equatable {
         case faker
         case random(minimum: Double, maximum: Double)
 
-        static let `default`: Config = .faker
+        static let `default`: Mode = .faker
     }
 }
 
-extension NumberGenerator.Config {
+extension NumberGenerator.Mode {
     init?(jsonObject: [String: Any]) throws {
         let numberKey = "number"
         guard let numberValue = jsonObject[numberKey] else { return nil }

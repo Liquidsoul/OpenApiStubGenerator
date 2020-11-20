@@ -6,7 +6,7 @@ class StringGeneratorTests: XCTestCase {
     func test_generate_static() {
         let staticString = "Some static string: \(UUID().uuidString)"
 
-        let sut = StringGenerator(config: .static(staticString), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
+        let sut = StringGenerator(mode: .static(staticString), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
 
 
         XCTAssertEqual(staticString, sut.generate(from: StringSchema()))
@@ -16,7 +16,7 @@ class StringGeneratorTests: XCTestCase {
     }
 
     func test_generate_randomFromList_empty() {
-        let sut = StringGenerator(config: .randomFromList([]), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
+        let sut = StringGenerator(mode: .randomFromList([]), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
 
         XCTAssertEqual("", sut.generate(from: StringSchema()))
         XCTAssertEqual("", sut.generate(from: StringSchema(format: .format(.email))))
@@ -27,7 +27,7 @@ class StringGeneratorTests: XCTestCase {
     func test_generate_randomFromList() {
         let list = ["1.", "2..", "3.."]
 
-        let sut = StringGenerator(config: .randomFromList(list), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
+        let sut = StringGenerator(mode: .randomFromList(list), dateGenerator: StringDateGeneratorStub(staticDate: Date()))
 
         XCTAssertTrue(list.contains(sut.generate(from: StringSchema())))
         XCTAssertTrue(list.contains(sut.generate(from: StringSchema(format: .format(.email)))))
@@ -36,7 +36,7 @@ class StringGeneratorTests: XCTestCase {
     }
 
     func test_generate_faker() {
-        let sut = StringGenerator(config: .faker, dateGenerator: StringDateGeneratorStub(staticDate: Date()))
+        let sut = StringGenerator(mode: .faker, dateGenerator: StringDateGeneratorStub(staticDate: Date()))
 
         XCTAssertNotEqual("", sut.generate(from: StringSchema()))
         XCTAssertTrue(sut.generate(from: StringSchema(format: .format(.email))).isEmail)

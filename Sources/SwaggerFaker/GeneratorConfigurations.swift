@@ -1,17 +1,17 @@
 struct GeneratorConfigurations: Equatable {
-    let boolean: BooleanGenerator.Config
-    let integer: IntegerGenerator.Config
-    let number: NumberGenerator.Config
-    let array: ArrayGenerator.Config
-    let date: DateGenerator.Config
-    let string: StringGenerator.Config
+    let boolean: BooleanGenerator.Mode
+    let integer: IntegerGenerator.Mode
+    let number: NumberGenerator.Mode
+    let array: ArrayGenerator.Mode
+    let date: DateGenerator.Mode
+    let string: StringGenerator.Mode
 
-    init(boolean: BooleanGenerator.Config,
-         integer: IntegerGenerator.Config,
-         number: NumberGenerator.Config,
-         array: ArrayGenerator.Config,
-         date: DateGenerator.Config,
-         string: StringGenerator.Config) {
+    init(boolean: BooleanGenerator.Mode,
+         integer: IntegerGenerator.Mode,
+         number: NumberGenerator.Mode,
+         array: ArrayGenerator.Mode,
+         date: DateGenerator.Mode,
+         string: StringGenerator.Mode) {
         self.boolean = boolean
         self.integer = integer
         self.number = number
@@ -30,11 +30,11 @@ struct GeneratorConfigurations: Equatable {
 
 extension GeneratorConfigurations {
     init(jsonObject: [String: Any]) throws {
-        self.init(boolean: try BooleanGenerator.Config(jsonObject: jsonObject) ?? .default,
-                  integer: try IntegerGenerator.Config(jsonObject: jsonObject) ?? .default,
-                  number: try NumberGenerator.Config(jsonObject: jsonObject) ?? .default,
-                  array: try ArrayGenerator.Config(jsonObject: jsonObject) ?? .default,
-                  date: try DateGenerator.Config(jsonObject: jsonObject) ?? .default,
-                  string: try StringGenerator.Config(jsonObject: jsonObject) ?? .default)
+        self.init(boolean: try BooleanGenerator.Mode(jsonObject: jsonObject) ?? .default,
+                  integer: try IntegerGenerator.Mode(jsonObject: jsonObject) ?? .default,
+                  number: try NumberGenerator.Mode(jsonObject: jsonObject) ?? .default,
+                  array: try ArrayGenerator.Mode(jsonObject: jsonObject) ?? .default,
+                  date: try DateGenerator.Mode(jsonObject: jsonObject) ?? .default,
+                  string: try StringGenerator.Mode(jsonObject: jsonObject) ?? .default)
     }
 }
