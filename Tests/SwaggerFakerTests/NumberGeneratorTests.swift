@@ -8,7 +8,7 @@ class NumberGeneratorTests: XCTestCase {
 
         let sut = NumberGenerator(config: .default)
 
-        let generations = (0..<4).reduce(into: Set<Float>()) { (generations, _) in
+        let generations = (0..<4).reduce(into: Set<Double>()) { (generations, _) in
             generations.insert(sut.generate(from: numberSchema))
         }
 
