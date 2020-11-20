@@ -7,20 +7,16 @@ struct Generator: ParsableCommand {
     @Option var specFile: String
     @Option var definition: String
     @Option var configFile: String?
+    @Flag var verbose: Bool = false
 
     func run() throws {
-        print("Parsing '\(specFile)'...")
+        if verbose {
+            print("Parsing '\(specFile)'...")
+        }
 
         let spec = try SwaggerSpec(url: URL(fileURLWithPath: specFile))
-//        print("\(spec)")
-
-//        print("-> \(definition)")
 
         guard let schema = spec.components.schemas.first(where: { $0.name == definition } ) else { return }
-
-//        print("= \(schema)")
-
-        print(" \(schema.value.metadata.type)")
 
         let configuration: Configuration
         if let configurationData = try configFile
@@ -33,9 +29,9 @@ struct Generator: ParsableCommand {
 
         let generator = StubGenerator(configuration: configuration)
         let stub = generator.generate(schemaType: schema.value.type)
-//        print("mock: \(mock)")
         if let data = try? JSONSerialization.data(withJSONObject: stub, options: .prettyPrinted), let formattedMock = String(data: data, encoding: .utf8) {
-            print("formatted mock: \(formattedMock)")
+            if verbose { print("formatted mock:") }
+            print(formattedMock)
         }
     }
 }
