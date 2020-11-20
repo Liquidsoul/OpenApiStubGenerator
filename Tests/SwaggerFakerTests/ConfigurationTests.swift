@@ -2,20 +2,15 @@
 import XCTest
 
 class ConfigurationTests: XCTestCase {
+
+    // MARK: - Defaults
+
     func test_loadJSONObject_empty() throws {
-        let configurationData = [String: Any]()
-
-        let configuration = try Configuration(jsonObject: configurationData)
-
-        XCTAssertEqual(configuration.defaults.boolean, .default)
-        XCTAssertEqual(configuration.defaults.integer, .default)
-        XCTAssertEqual(configuration.defaults.number, .default)
-        XCTAssertEqual(configuration.defaults.array, .default)
-        XCTAssertEqual(configuration.defaults.date, .default)
-        XCTAssertEqual(configuration.defaults.string, .default)
+        XCTAssertEqual(try Configuration(jsonObject: [:]).defaults, .default)
+        XCTAssertEqual(try Configuration(jsonObject: ["defaults": [String: Any]()]).defaults, .default)
     }
 
-    // MARK: - Array
+    // MARK: Array
 
     func test_loadJSONObject_defaults_arrayConfiguration() throws {
         let configurationData: [String: Any] = [
@@ -72,7 +67,7 @@ class ConfigurationTests: XCTestCase {
         XCTAssertThrowsError(try Configuration(jsonObject: configurationData))
     }
 
-    // MARK: - Date
+    // MARK: Date
 
     func test_loadJSONObject_defaults_dateConfiguration_now() throws {
         let configurationData: [String: Any] = [
@@ -197,7 +192,7 @@ class ConfigurationTests: XCTestCase {
         XCTAssertTrue(from <= nextDate)
     }
 
-    // MARK: - String
+    // MARK: String
 
     func test_loadJSONObject_defaults_stringConfiguration_static() throws {
         let configurationData: [String: Any] = [
@@ -258,7 +253,7 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(configuration.defaults.string, .randomFromList(["List", "of", "strings"]))
     }
 
-    // MARK: - Integer
+    // MARK: Integer
 
     func test_loadJSONObject_defaults_integerConfiguration_faker() throws {
         let configurationData: [String: Any] = [
@@ -298,7 +293,7 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(configuration.defaults.string, .default)
     }
 
-    // MARK: - Number
+    // MARK: Number
 
     func test_loadJSONObject_defaults_numberConfiguration_faker() throws {
         let configurationData: [String: Any] = [
@@ -358,7 +353,7 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(configuration.defaults.string, .default)
     }
 
-    // MARK: - Boolean
+    // MARK: Boolean
 
     func test_loadJSONObject_defaults_booleanConfiguration_faker() throws {
         let configurationData: [String: Any] = [

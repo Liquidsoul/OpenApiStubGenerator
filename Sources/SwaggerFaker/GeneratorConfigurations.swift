@@ -1,4 +1,4 @@
-struct GeneratorConfigurations {
+struct GeneratorConfigurations: Equatable {
     let boolean: BooleanGenerator.Config
     let integer: IntegerGenerator.Config
     let number: NumberGenerator.Config
