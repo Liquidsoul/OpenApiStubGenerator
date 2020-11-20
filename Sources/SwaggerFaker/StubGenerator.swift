@@ -8,16 +8,11 @@ public struct StubGenerator {
         self.generators = GeneratorGroup(configuration: configuration.defaults)
     }
 
-    enum Item {
-        case key(String)
-        case index(Int)
-    }
-
     public func generate(schemaType: SchemaType) -> Any {
-        return generate(schemaType, path: [])
+        return generate(schemaType, path: .init())
     }
 
-    func generate(_ schemaType: SchemaType, path: [Item]) -> Any {
+    func generate(_ schemaType: SchemaType, path: SchemaPath) -> Any {
         switch schemaType {
         case .integer(let integerSchema):
             return generate(integerSchema)
@@ -48,15 +43,15 @@ public struct StubGenerator {
         return generators.stringGenerator.generate(from: stringSchema)
     }
 
-    func generate(_ arraySchema: ArraySchema, path: [Item]) -> [Any] {
+    func generate(_ arraySchema: ArraySchema, path: SchemaPath) -> [Any] {
         return generators.arrayGenerator.generate(arraySchema: arraySchema) { (schemaType, index) -> Any in
-            return generate(schemaType, path: path + [.index(index)])
+            return generate(schemaType, path: path + .index(index))
         }
     }
 
-    func generate(_ objectSchema: ObjectSchema, path: [Item]) -> [String: Any] {
+    func generate(_ objectSchema: ObjectSchema, path: SchemaPath) -> [String: Any] {
         return objectSchema.properties.reduce(into: [String: Any]()) { (result, property) in
-            result[property.name] = generate(property.schema.type, path: path + [Item.key(property.name)])
+            result[property.name] = generate(property.schema.type, path: path + .key(property.name))
         }
     }
 }
