@@ -6,7 +6,7 @@ class NumberGeneratorTests: XCTestCase {
     func test_generate_returns_different_values_for_successive_calls() {
         let numberSchema = NumberSchema()
 
-        let sut = NumberGenerator(mode: .default)
+        let sut = NumberGenerator(mode: .faker)
 
         let generations = (0..<4).reduce(into: Set<Double>()) { (generations, _) in
             generations.insert(sut.generate(from: numberSchema))
@@ -16,7 +16,7 @@ class NumberGeneratorTests: XCTestCase {
     }
 
     func test_generate_with_schema_boundaries() {
-        let sut = NumberGenerator(mode: .default)
+        let sut = NumberGenerator(mode: .faker)
 
         XCTAssertLessThanOrEqual(20.2, sut.generate(from: .init(minimum: 20.2)))
         XCTAssertGreaterThanOrEqual(-42.4, sut.generate(from: .init(maximum: -42.4)))

@@ -3,10 +3,10 @@ import XCTest
 import Swagger
 
 class IntegerGeneratorTests: XCTestCase {
-    func test_generate_returns_different_values_for_successive_calls() {
+    func test_generate_faker_returns_different_values_for_successive_calls() {
         let integerSchema = IntegerSchema()
 
-        let sut = IntegerGenerator(mode: .default)
+        let sut = IntegerGenerator(mode: .faker)
 
         let generations = (0..<4).reduce(into: Set<Int>()) { (generations, _) in
             generations.insert(sut.generate(from: integerSchema))
@@ -16,7 +16,7 @@ class IntegerGeneratorTests: XCTestCase {
     }
 
     func test_generate_with_schema_boundaries() {
-        let sut = IntegerGenerator(mode: .default)
+        let sut = IntegerGenerator(mode: .faker)
 
         XCTAssertLessThanOrEqual(20, sut.generate(from: .init(minimum: 20)))
         XCTAssertGreaterThanOrEqual(-42, sut.generate(from: .init(maximum: -42)))

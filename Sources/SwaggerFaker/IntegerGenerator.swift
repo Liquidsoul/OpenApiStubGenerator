@@ -49,12 +49,10 @@ struct IntegerGenerator {
     enum Mode: Equatable {
         case faker
         case random(minimum: Int, maximum: Int)
-
-        static let `default`: Mode = .faker
     }
 }
 
-extension IntegerGenerator.Mode {
+extension IntegerGenerator.Mode: JSONObjectLoadable {
     init?(jsonObject: [String: Any]) throws {
         let integerKey = "integer"
         guard let integerValue = jsonObject[integerKey] else { return nil }

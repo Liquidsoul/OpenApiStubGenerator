@@ -18,12 +18,10 @@ struct BooleanGenerator {
     enum Mode: Equatable {
         case faker
         case `static`(Bool)
-
-        static let `default`: Mode = .faker
     }
 }
 
-extension BooleanGenerator.Mode {
+extension BooleanGenerator.Mode: JSONObjectLoadable {
     init?(jsonObject: [String: Any]) throws {
         let booleanKey = "boolean"
         guard let booleanValue = jsonObject[booleanKey] else { return nil }

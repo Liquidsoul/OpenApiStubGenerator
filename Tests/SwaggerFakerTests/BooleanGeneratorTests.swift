@@ -3,8 +3,8 @@ import XCTest
 import Swagger
 
 class BooleanGeneratorTests: XCTestCase {
-    func test_generate_returns_different_values_for_successive_calls() {
-        let sut = BooleanGenerator(mode: .default)
+    func test_generate_faker_returns_different_values_for_successive_calls() {
+        let sut = BooleanGenerator(mode: .faker)
 
         let generations = (0..<10).reduce(into: Set<Bool>()) { (generations, _) in
             generations.insert(sut.generate())

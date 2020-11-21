@@ -27,8 +27,6 @@ class ArrayGenerator {
     enum Mode: Equatable {
         case randomLength(range: Range<Int>)
 
-        static let `default`: Mode = .randomLength(range: 1..<5)
-
         var length: Int {
             switch self {
             case .randomLength(let range):
@@ -38,7 +36,7 @@ class ArrayGenerator {
     }
 }
 
-extension ArrayGenerator.Mode {
+extension ArrayGenerator.Mode: JSONObjectLoadable {
     init?(jsonObject: [String: Any]) throws {
         let arrayKey = "array"
         guard let arrayValue = jsonObject[arrayKey] else { return nil }

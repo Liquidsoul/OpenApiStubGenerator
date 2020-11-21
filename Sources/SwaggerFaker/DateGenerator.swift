@@ -31,8 +31,6 @@ class DateGenerator: StringDateGenerator {
         case now
         case increments(from: Date, by: TimeInterval)
         case random(after: Date, before: Date)
-
-        static let `default`: Mode = .random(after: Date().addingTimeInterval(-48 * 3600), before: Date().addingTimeInterval(48 * 3600))
     }
 
     lazy var dateFormatter: ISO8601DateFormatter = ISO8601DateFormatter().withFormatOptions([.withInternetDateTime, .withFractionalSeconds])
@@ -45,7 +43,7 @@ extension ISO8601DateFormatter {
     }
 }
 
-extension DateGenerator.Mode {
+extension DateGenerator.Mode: JSONObjectLoadable {
     init?(jsonObject: [String: Any]) throws {
         let dateKey = "date"
         guard let dateValue = jsonObject[dateKey] else { return nil }

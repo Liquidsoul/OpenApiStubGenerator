@@ -67,8 +67,6 @@ struct StringGenerator {
         case faker
         case `static`(String)
         case randomFromList([String])
-
-        static let `default`: Mode = .faker
     }
 }
 
@@ -85,7 +83,7 @@ extension StringDateGenerator {
     }
 }
 
-extension StringGenerator.Mode {
+extension StringGenerator.Mode: JSONObjectLoadable {
     init?(jsonObject: [String: Any]) throws {
         let stringKey = "string"
         guard let stringValue = jsonObject[stringKey] else { return nil }

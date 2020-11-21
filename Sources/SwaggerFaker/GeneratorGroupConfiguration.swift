@@ -1,18 +1,18 @@
 extension GeneratorGroup {
     struct Configuration: Equatable {
-        let boolean: BooleanGenerator.Mode
-        let integer: IntegerGenerator.Mode
-        let number: NumberGenerator.Mode
-        let array: ArrayGenerator.Mode
-        let date: DateGenerator.Mode
-        let string: StringGenerator.Mode
+        var boolean: GeneratorConfig<BooleanGenerator.Mode>
+        var integer: GeneratorConfig<IntegerGenerator.Mode>
+        var number: GeneratorConfig<NumberGenerator.Mode>
+        var array: GeneratorConfig<ArrayGenerator.Mode>
+        var date: GeneratorConfig<DateGenerator.Mode>
+        var string: GeneratorConfig<StringGenerator.Mode>
 
-        init(boolean: BooleanGenerator.Mode,
-             integer: IntegerGenerator.Mode,
-             number: NumberGenerator.Mode,
-             array: ArrayGenerator.Mode,
-             date: DateGenerator.Mode,
-             string: StringGenerator.Mode) {
+        init(boolean: GeneratorConfig<BooleanGenerator.Mode>,
+             integer: GeneratorConfig<IntegerGenerator.Mode>,
+             number: GeneratorConfig<NumberGenerator.Mode>,
+             array: GeneratorConfig<ArrayGenerator.Mode>,
+             date: GeneratorConfig<DateGenerator.Mode>,
+             string: GeneratorConfig<StringGenerator.Mode>) {
             self.boolean = boolean
             self.integer = integer
             self.number = number
@@ -20,23 +20,25 @@ extension GeneratorGroup {
             self.date = date
             self.string = string
         }
-
-        static let `default`: Configuration = .init(boolean: .default,
-                                                    integer: .default,
-                                                    number: .default,
-                                                    array: .default,
-                                                    date: .default,
-                                                    string: .default)
     }
 }
 
 extension GeneratorGroup.Configuration {
     init(jsonObject: [String: Any]) throws {
-        self.init(boolean: try BooleanGenerator.Mode(jsonObject: jsonObject) ?? .default,
-                  integer: try IntegerGenerator.Mode(jsonObject: jsonObject) ?? .default,
-                  number: try NumberGenerator.Mode(jsonObject: jsonObject) ?? .default,
-                  array: try ArrayGenerator.Mode(jsonObject: jsonObject) ?? .default,
-                  date: try DateGenerator.Mode(jsonObject: jsonObject) ?? .default,
-                  string: try StringGenerator.Mode(jsonObject: jsonObject) ?? .default)
+        try self.init(boolean: .init(jsonObject: jsonObject),
+                      integer: .init(jsonObject: jsonObject),
+                      number: .init(jsonObject: jsonObject),
+                      array: .init(jsonObject: jsonObject),
+                      date: .init(jsonObject: jsonObject),
+                      string: .init(jsonObject: jsonObject))
+    }
+
+    func overridden(with configuration: GeneratorGroup.Configuration) -> GeneratorGroup.Configuration {
+        return .init(boolean: boolean.override != nil ? boolean : configuration.boolean,
+                     integer: integer.override != nil ? integer : configuration.integer,
+                     number: number.override != nil ? number : configuration.number,
+                     array: array.override != nil ? array : configuration.array,
+                     date: date.override != nil ? date : configuration.date,
+                     string: string.override != nil ? string : configuration.string)
     }
 }

@@ -4,7 +4,7 @@ import Swagger
 public struct StubGenerator {
     private let generators: GeneratorGroup
 
-    public init(configuration: Configuration = .default) {
+    public init(configuration: Configuration = .init()) {
         self.generators = GeneratorGroup(configuration: configuration.defaults)
     }
 

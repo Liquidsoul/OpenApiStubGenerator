@@ -24,7 +24,7 @@ struct Generator: ParsableCommand {
             .flatMap({ try JSONSerialization.jsonObject(with: $0, options: []) }) {
             configuration = try Configuration(json: configurationData)
         } else {
-            configuration = .default
+            configuration = .init()
         }
 
         let generator = StubGenerator(configuration: configuration)
