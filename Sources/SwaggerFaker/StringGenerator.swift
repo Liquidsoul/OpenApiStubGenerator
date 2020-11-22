@@ -5,7 +5,7 @@ import Swagger
 struct StringGenerator {
     private let faker = Faker()
     let mode: Mode
-    let dateGenerator: StringDateGenerator
+    var dateGenerator: StringDateGenerator
 
     func generate(from schema: StringSchema) -> String {
         if case let .format(formatType) = schema.format, formatType == .date || formatType == .dateTime {
@@ -68,14 +68,27 @@ struct StringGenerator {
     }
 }
 
+extension StringGenerator {
+    func withDateGenerator(_ dateGenerator: StringDateGenerator) -> StringGenerator {
+        var stringGenerator = self
+        stringGenerator.dateGenerator = dateGenerator
+        return stringGenerator
+    }
+}
+
 protocol StringDateGenerator {
     var dateFormatter: ISO8601DateFormatter { get }
+    var mode: DateGenerator.Mode { get }
 
     func generate() -> String
     func generateDate() -> Date
 }
 
 extension StringDateGenerator {
+    var mode: DateGenerator.Mode {
+        return .now
+    }
+
     func generate() -> String {
         return dateFormatter.string(from: generateDate())
     }
