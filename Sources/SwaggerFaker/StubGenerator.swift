@@ -2,10 +2,15 @@ import Foundation
 import Swagger
 
 public struct StubGenerator {
-    private let generators: GeneratorGroup
+
+    private let generatorProvider: StubGeneratorProvider
+
+    init(generatorProvider: StubGeneratorProvider) {
+        self.generatorProvider = generatorProvider
+    }
 
     public init(configuration: Configuration = .init()) {
-        self.generators = GeneratorGroup(configuration: configuration.defaults)
+        self.init(generatorProvider: GeneratorProvider(configuration: configuration))
     }
 
     public func generate(schemaType: SchemaType) -> Any {
@@ -13,17 +18,20 @@ public struct StubGenerator {
     }
 
     func generate(_ schemaType: SchemaType, path: SchemaPath) -> Any {
+        func generators() -> GeneratorGroup {
+            return generatorProvider.generators(for: path)
+        }
         switch schemaType {
         case .integer(let integerSchema):
-            return generate(integerSchema)
+            return generators().integerGenerator.generate(from: integerSchema)
         case .string(let stringSchema):
-            return generate(stringSchema)
+            return generators().stringGenerator.generate(from: stringSchema)
         case .number(let numberSchema):
-            return generators.numberGenerator.generate(from: numberSchema)
+            return generators().numberGenerator.generate(from: numberSchema)
         case .boolean:
-            return generators.booleanGenerator.generate()
+            return generators().booleanGenerator.generate()
         case .array(let arraySchema):
-            return generate(arraySchema, path: path)
+            return generate(arraySchema, path: path, generators: generators())
         case .object(let objectSchema):
             return generate(objectSchema, path: path)
         case .reference(let reference):
@@ -35,15 +43,7 @@ public struct StubGenerator {
         }
     }
 
-    func generate(_ integerSchema: IntegerSchema) -> Int {
-        return generators.integerGenerator.generate(from: integerSchema)
-    }
-
-    func generate(_ stringSchema: StringSchema) -> String {
-        return generators.stringGenerator.generate(from: stringSchema)
-    }
-
-    func generate(_ arraySchema: ArraySchema, path: SchemaPath) -> [Any] {
+    private func generate(_ arraySchema: ArraySchema, path: SchemaPath, generators: GeneratorGroup) -> [Any] {
         return generators.arrayGenerator.generate(arraySchema: arraySchema) { (schemaType, index) -> Any in
             return generate(schemaType, path: path + .index(index))
         }
@@ -55,3 +55,9 @@ public struct StubGenerator {
         }
     }
 }
+
+protocol StubGeneratorProvider {
+    func generators(for path: SchemaPath) -> GeneratorGroup
+}
+
+extension GeneratorProvider: StubGeneratorProvider {}

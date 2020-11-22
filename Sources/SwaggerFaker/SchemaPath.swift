@@ -1,7 +1,7 @@
-struct SchemaPath: Equatable {
+struct SchemaPath: Equatable, Hashable {
     var path: [Item]
 
-    enum Item: Equatable {
+    enum Item: Equatable, Hashable {
         case key(String)
         case index(Int)
     }

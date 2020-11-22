@@ -36,3 +36,14 @@ extension GeneratorGroup {
                   arrayGenerator: configuration.array.override.map(ArrayGenerator.init(mode:)) ?? defaults.arrayGenerator)
     }
 }
+
+extension GeneratorGroup {
+    var configuration: GeneratorGroup.Configuration {
+        return GeneratorGroup.Configuration(boolean: .override(booleanGenerator.mode),
+                                            integer: .override(integerGenerator.mode),
+                                            number: .override(numberGenerator.mode),
+                                            array: .override(arrayGenerator.mode),
+                                            date: .override(dateGenerator.mode),
+                                            string: .override(stringGenerator.mode))
+    }
+}
