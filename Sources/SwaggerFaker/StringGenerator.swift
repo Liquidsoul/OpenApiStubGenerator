@@ -4,11 +4,6 @@ import Swagger
 
 struct StringGenerator {
     private let faker = Faker()
-    private let dateFormatter: ISO8601DateFormatter = {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return formatter
-    }()
     let mode: Mode
     let dateGenerator: StringDateGenerator
 
