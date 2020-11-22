@@ -2,12 +2,45 @@
   "defaults": {
     "array": {
       "type": "randomLength",
-      "minimum": 1,
-      "maximum": 1
+      "minimum": 4,
+      "maximum": 4
     },
     "string": {
       "type": "randomFromList",
       "list": ["RER", "BUS", "METRO"]
+    }
+  },
+  "paths": {
+    "name": {
+      "string": {
+        "type": "static",
+        "value": "<name>"
+      }
+    },
+    "identifier": {
+      "string": {
+        "type": "static",
+        "value": "<identifier>"
+      }
+    },
+    "dateTime": {
+      "date": {
+        "type": "increments",
+        "from": "now",
+        "incrementInSeconds": 60
+      }
+    },
+    "directionName": {
+      "string": {
+        "type": "randomFromList",
+        "list": ["left", "right"]
+      }
+    },
+    "servicePatternName": {
+      "string": {
+        "type": "static",
+        "value": "SPN"
+      }
     }
   }
 }
