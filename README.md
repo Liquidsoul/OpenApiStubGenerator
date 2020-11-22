@@ -2,7 +2,13 @@
 
 A tool to generate stubs from a an OpenAPI specification.
 
+Basic commands for the project are declared in the `Makefile`. You can list them using `make help` or just `make`.
+
 ## Example
+
+You can find example files in the `Examples/` folder and you can run one using `make docker_run_example`.
+
+Below shows the result output given some inputs to show an example of what can be done.
 
 Configuration file `Examples/config.json`
 
