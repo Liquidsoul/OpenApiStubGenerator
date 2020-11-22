@@ -25,6 +25,11 @@ install: build_release
 uninstall:
 	rm -f $(INSTALL_PATH)
 
+.PHONY: run_example
+## Run the project example locally
+run_example: build_release
+	swift run $(TOOL_NAME) --config-file Examples/config.json --spec-file Examples/spec.yml --definition Result
+
 .PHONY: docker_build
 ## Build a docker image. You can override the image name and version by specifying IMAGE_NAME= or DOCKER_VERSION= before the docker_build target
 docker_build:
@@ -34,6 +39,11 @@ docker_build:
 ## Push the previously built image into docker. See docker_build for more informations
 docker_push:
 	docker push $(IMAGE_NAME):$(DOCKER_VERSION)
+
+.PHONY: docker_run_example
+## Run the project example using docker
+docker_run_example: docker_build
+	docker run -v $(pwd)/Examples/:workdir $(IMAGE_NAME):$(DOCKER_VERSION) openapi-stub-generator --config-file /workdir/config.json --spec-file /workdir/spec.yml --definition Result
 
 .PHONY: help
 # taken from this gist https://gist.github.com/rcmachado/af3db315e31383502660
