@@ -2,7 +2,7 @@ import Fakery
 import Foundation
 
 class DateGenerator: StringDateGenerator {
-    private let mode: Mode
+    let mode: Mode
     private let faker = Faker()
 
     private var incrementCounter = 0
