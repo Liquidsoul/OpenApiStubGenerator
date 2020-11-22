@@ -11,8 +11,10 @@ class StringGeneratorTests: XCTestCase {
 
         XCTAssertEqual(staticString, sut.generate(from: StringSchema()))
         XCTAssertEqual(staticString, sut.generate(from: StringSchema(format: .format(.email))))
-        XCTAssertEqual(staticString, sut.generate(from: StringSchema(format: .format(.date))))
-        XCTAssertEqual(staticString, sut.generate(from: StringSchema(format: .format(.dateTime))))
+        XCTAssertNotEqual(staticString, sut.generate(from: StringSchema(format: .format(.date))))
+        XCTAssertNotEqual(staticString, sut.generate(from: StringSchema(format: .format(.dateTime))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.date)))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.dateTime)))))
     }
 
     func test_generate_randomFromList_empty() {
@@ -20,8 +22,10 @@ class StringGeneratorTests: XCTestCase {
 
         XCTAssertEqual("", sut.generate(from: StringSchema()))
         XCTAssertEqual("", sut.generate(from: StringSchema(format: .format(.email))))
-        XCTAssertEqual("", sut.generate(from: StringSchema(format: .format(.date))))
-        XCTAssertEqual("", sut.generate(from: StringSchema(format: .format(.dateTime))))
+        XCTAssertNotEqual("", sut.generate(from: StringSchema(format: .format(.date))))
+        XCTAssertNotEqual("", sut.generate(from: StringSchema(format: .format(.dateTime))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.date)))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.dateTime)))))
     }
 
     func test_generate_randomFromList() {
@@ -31,8 +35,10 @@ class StringGeneratorTests: XCTestCase {
 
         XCTAssertTrue(list.contains(sut.generate(from: StringSchema())))
         XCTAssertTrue(list.contains(sut.generate(from: StringSchema(format: .format(.email)))))
-        XCTAssertTrue(list.contains(sut.generate(from: StringSchema(format: .format(.date)))))
-        XCTAssertTrue(list.contains(sut.generate(from: StringSchema(format: .format(.dateTime)))))
+        XCTAssertFalse(list.contains(sut.generate(from: StringSchema(format: .format(.date)))))
+        XCTAssertFalse(list.contains(sut.generate(from: StringSchema(format: .format(.dateTime)))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.date)))))
+        XCTAssertNotNil(dateFormatter.date(from: sut.generate(from: StringSchema(format: .format(.dateTime)))))
     }
 
     func test_generate_faker() {

@@ -13,6 +13,9 @@ struct StringGenerator {
     let dateGenerator: StringDateGenerator
 
     func generate(from schema: StringSchema) -> String {
+        if case let .format(formatType) = schema.format, formatType == .date || formatType == .dateTime {
+            return dateGenerator.generate()
+        }
         switch mode {
         case .faker:
             return fakerGenerate(schema: schema)
