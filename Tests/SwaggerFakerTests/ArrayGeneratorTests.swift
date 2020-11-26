@@ -1,6 +1,6 @@
 @testable import SwaggerFaker
 import XCTest
-import Swagger
+@testable import Swagger
 
 class ArrayGeneratorTests: XCTestCase {
 

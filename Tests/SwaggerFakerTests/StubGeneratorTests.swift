@@ -1,6 +1,6 @@
 @testable import SwaggerFaker
 import XCTest
-import Swagger
+@testable import Swagger
 
 class StubGeneratorTests: XCTestCase {
     func test_generate_invoke_provider_once_and_only_once_per_schema_path() {
