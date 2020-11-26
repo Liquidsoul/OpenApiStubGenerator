@@ -4,6 +4,12 @@ A tool to generate stubs from a an OpenAPI specification.
 
 Basic commands for the project are declared in the `Makefile`. You can list them using `make help` or just `make`.
 
+## Quick run
+
+```
+docker run -v /path/containing/files:/workdir liquidsoul/openapi-stub-generator:dev openapi-stub-generator --config-file /workdir/config.json --spec-file /workdir/spec.yml --definition Result
+```
+
 ## Example
 
 You can find example files in the `Examples/` folder and you can run one using `make docker_run_example`.
