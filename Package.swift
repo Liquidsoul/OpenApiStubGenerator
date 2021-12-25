@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/yonaskolb/SwagGen.git", .upToNextMinor(from: "4.3.1")),
-        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "0.3.0")),
+        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "1.0.2")),
         .package(url: "https://github.com/Liquidsoul/Fakery", .branch("spm/resources"))
     ],
     targets: [
