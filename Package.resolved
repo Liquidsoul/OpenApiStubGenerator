@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/yonaskolb/SwagGen.git",
         "state": {
           "branch": null,
-          "revision": "ec2f10ea50b6102f37d5e8cc669fc282608c25ff",
-          "version": "4.3.1"
+          "revision": "4db8fadde1583d976ac733f85abc69da0b8b1ad8",
+          "version": "4.4.0"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/jpsim/Yams.git",
         "state": {
           "branch": null,
-          "revision": "b08dba4bcea978bf1ad37703a384097d3efce5af",
-          "version": "1.0.2"
+          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+          "version": "4.0.6"
         }
       }
     ]
