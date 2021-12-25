@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "Fakery",
-        "repositoryURL": "https://github.com/Liquidsoul/Fakery",
+        "repositoryURL": "https://github.com/vadymmarkov/Fakery",
         "state": {
-          "branch": "spm/resources",
-          "revision": "28b6fe528628bed012e37baf95376b8a59c27c40",
-          "version": null
+          "branch": null,
+          "revision": "71cb3bf36a808534659d1248780c2bf3c4c4fc91",
+          "version": "5.1.0"
         }
       },
       {
