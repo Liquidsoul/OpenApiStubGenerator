@@ -13,7 +13,7 @@ let package = Package(
         .library(name: "SwaggerFaker", targets: ["SwaggerFaker"])
     ],
     dependencies: [
-        .package(url: "https://github.com/yonaskolb/SwagGen.git", .upToNextMinor(from: "4.4.0")),
+        .package(url: "https://github.com/yonaskolb/SwagGen.git", .upToNextMajor(from: "4.6.0")),
         .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMinor(from: "1.0.2")),
         .package(url: "https://github.com/Liquidsoul/Fakery", .branch("spm/resources"))
     ],
